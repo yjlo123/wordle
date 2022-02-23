@@ -58,9 +58,10 @@ window.addEventListener("keydown", function(e) {
         }
     	// prevent scroll
         e.preventDefault();
-    } else if ('abcdefghijklmnopqrstuvwxyz'.indexOf(e.key) > -1) {
+    } else if ('abcdefghijklmnopqrstuvwxyz'.indexOf(e.key.toLowerCase()) > -1) {
         if (cursor < 5) {
-            word += e.key;
+            word += e.key.toLowerCase();
+            console.log($('.r:nth-child(' + (row+1) + ') .c:nth-child('+(cursor+1)+')'))
             $('.r:nth-child(' + (row+1) + ') .c:nth-child('+(cursor+1)+')').text(e.key.toUpperCase());
             cursor += 1;
         }
@@ -97,4 +98,13 @@ for (let r = 0; r < keys.length; r++) {
         keyRow.append($('<div class="key key-'+letter.toLowerCase()+'">'+letter+'</div>'));
     }
     keyboard.append(keyRow);
+}
+
+let board = $(".console-view");
+for (let i = 0; i < 6; i++) {
+    let row = $('<div class="r"></div>');
+    for (let j = 0; j < 5; j++) {
+        row.append($('<div class="c"></div>'));
+    }
+    board.append(row);
 }

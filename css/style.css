@@ -29,6 +29,7 @@ div {
     padding: 8px 10px;
     border-radius: 5px;
     margin: 2px;
+    cursor: default;
 }
 
 .c {
@@ -61,7 +62,7 @@ div {
     display: none;
     position: absolute;
     left : 50%;
-    top: 50%;
+    top: 20%;
     color: white;
     transform: translate(-50%, -50%);
     padding: 10px 30px;
