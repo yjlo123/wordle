@@ -8,6 +8,13 @@ let row = 0;
 let word = "";
 let gameover = false;
 
+let keyboard = $(".keyboard");
+let keys = [
+    "QWERTYUIOP",
+    "ASDFGHJKL",
+    "ZXCVBNM"
+];
+
 let io = {
     Write: (text, style) => {
         
@@ -81,35 +88,13 @@ function onPressBackspace() {
     }
 }
 
-window.addEventListener("keydown", function(e) {
-    if(e.code === "Enter") {
-        onPressEnter();
-        // prevent scroll
-        e.preventDefault();
-    } else if ('abcdefghijklmnopqrstuvwxyz'.indexOf(e.key.toLowerCase()) > -1) {
-        onPressLetter(e.key);
-    } else if (e.key === "Backspace") {
-        onPressBackspace();
-    }
-}, false);
-
-// parser, evaluater, editor, consl, canvas, controls, options
-runtime.config(parser, evaluator, null, io, null, {}, {});
-
-let keyboard = $(".keyboard");
-let keys = [
-    "QWERTYUIOP",
-    "ASDFGHJKL",
-    "ZXCVBNM"
-];
-
 function initKeyboard() {
     keyboard.empty();
     for (let r = 0; r < keys.length; r++) {
         let row = keys[r];
         let keyRow = $('<div class="key-row"></div>');
         if (r === 2) {
-            let enterKey = $('<div class="key key-enter">Enter</div>');
+            let enterKey = $('<div class="key key-enter">&nbsp;Enter&nbsp;</div>');
             enterKey.on("click", function() {
                 onPressEnter();
             });
@@ -117,14 +102,14 @@ function initKeyboard() {
         }
         for (let i = 0; i < row.length; i++) {
             let letter = row[i];
-            let key = $('<div class="key key-'+letter.toLowerCase()+'">'+letter+'</div>');
+            let key = $('<div class="key key-letter key-'+letter.toLowerCase()+'">'+letter+'</div>');
             key.on("click", function() {
                 onPressLetter(letter);
             });
             keyRow.append(key);
         }
         if (r === 2) {
-            let delKey = $('<div class="key key-del">Del</div>');
+            let delKey = $('<div class="key key-del">&nbsp;⌫&nbsp;</div>');
             delKey.on("click", function() {
                 onPressBackspace();
             });
@@ -160,10 +145,25 @@ function startGame() {
     runtime.executeAll({in: words}, wordleSrc);
 }
 
+window.addEventListener("keydown", function(e) {
+    if(e.code === "Enter") {
+        onPressEnter();
+        // prevent scroll
+        e.preventDefault();
+    } else if ('abcdefghijklmnopqrstuvwxyz'.indexOf(e.key.toLowerCase()) > -1) {
+        onPressLetter(e.key);
+    } else if (e.key === "Backspace") {
+        onPressBackspace();
+    }
+}, false);
+
 $(".new-game").on("click", function(){
     $(".result-word").hide();
     $(".new-game").hide();
     startGame();
 });
+
+// parser, evaluater, editor, consl, canvas, controls, options
+runtime.config(parser, evaluator, null, io, null, {}, {});
 
 startGame();
