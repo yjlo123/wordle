@@ -81,7 +81,7 @@ runtime.config(parser, evaluator, null, io, null, {}, {});
 const randomWord = words[Math.floor(Math.random() * words.length)];
 
 runtime.restart();
-runtime.executeAll({in: words}, rundisSrc);
+runtime.executeAll({in: words}, wordleSrc);
 
 let keyboard = $(".keyboard");
 let keys = [

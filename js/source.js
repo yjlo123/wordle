@@ -1,4 +1,4 @@
-let rundisSrc = `
+let wordleSrc = `
 let list $in
 len $list count
 rnd idx 0 $count
