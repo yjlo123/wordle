@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="chrome=1">
 	<title>Wordle</title>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<link rel="icon" href="https://siwei.dev/favicon.gif">
 
 	<script src="https://runtime.siwei.dev/ui/main/jquery-1.12.4.js"></script>
@@ -15,9 +15,10 @@
 <body>
 	<div class="wrapper">
 		<div class="console-view"></div>
-		<div class="alert">Not in word list</div>
+		<div class="alert not-in-list">Not in word list</div>
+		<div class="alert result-word"></div>
 		<div class="keyboard"></div>
-
+		<div class="key new-game">New Game</div>
 		<div class="app-info">
 			<p>This game is written in <a href="https://github.com/yjlo123/runtime-script" target="_blank">Runtime Script</a>.</p>
 			<p>View source code <a href="https://raw.githubusercontent.com/yjlo123/wordle/main/js/source.js" target="_blank">here</a>.</p>

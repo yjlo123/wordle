@@ -1,7 +1,7 @@
 let wordleSrc = `
 let list $in
-len $list count
-rnd idx 0 $count
+len $list total
+rnd idx 0 $total
 
 get $list $idx w
 
@@ -9,6 +9,8 @@ let map {}
 for c $w
  put $map $c 1
 nxt
+
+let count 0
 
 #loop
 inp in
@@ -36,8 +38,16 @@ nxt
 prt $res
 
 ife $win 1
- prt 'win'
+ prt 'win:'
 els
+ ife $count 5
+  let fail_res 'fail:'
+  add fail_res $fail_res $w
+  prt $fail_res
+  jmp end
+ fin
+ add count $count 1
  jmp loop
 fin
+#end
 `

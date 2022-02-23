@@ -10,10 +10,21 @@ let gameover = false;
 
 let io = {
     Write: (text, style) => {
-        if (text.trim() === "win") {
-            gameover = true;
+        
+        if (text.indexOf(":") > -1) {
+            let tokens = text.trim().split(":");
+            if (tokens[0] === "win") {
+                gameover = true;
+            } else if (tokens[0] === "fail") {
+                gameover = true;
+                let resultWord = $(".result-word");
+                resultWord.text(tokens[1].toUpperCase());
+                resultWord.fadeIn();
+            }
+            $(".new-game").show();
             return;
         }
+        
         try {
             let data = JSON.parse(text);
             for (let i = 0; i < 5; i++) {
@@ -43,45 +54,47 @@ let io = {
     AbortInput: ()=>{}
 }
 
-window.addEventListener("keydown", function(e) {
-    if (gameover) {
-        return;
+function onPressLetter(letter) {
+    if (!gameover && cursor < 5) {
+        word += letter.toLowerCase();
+        $('.r:nth-child(' + (row+1) + ') .c:nth-child('+(cursor+1)+')').text(letter.toUpperCase());
+        cursor += 1;
     }
-    if(e.code === "Enter") {
-        if (word.length === 5) {
-            if (words.indexOf(word) === -1) {
-                $( ".alert" ).show();
-                $( ".alert" ).delay(1000).fadeOut( "slow" );
-            } else {
-                enterCallback(word);
-            }
+}
+
+function onPressEnter() {
+    if (!gameover && word.length === 5) {
+        if (words.indexOf(word) === -1) {
+            $( ".not-in-list" ).show();
+            $( ".not-in-list" ).delay(1000).fadeOut( "slow" );
+        } else {
+            enterCallback(word);
         }
+    }
+}
+
+function onPressBackspace() {
+    if (!gameover && cursor > 0) {
+        cursor -= 1;
+        $('.r:nth-child(' + (row+1) + ') .c:nth-child('+(cursor+1)+')').text("");
+        word = word.slice(0, word.length-1)
+    }
+}
+
+window.addEventListener("keydown", function(e) {
+    if(e.code === "Enter") {
+        onPressEnter();
         // prevent scroll
         e.preventDefault();
     } else if ('abcdefghijklmnopqrstuvwxyz'.indexOf(e.key.toLowerCase()) > -1) {
-        if (cursor < 5) {
-            word += e.key.toLowerCase();
-            console.log($('.r:nth-child(' + (row+1) + ') .c:nth-child('+(cursor+1)+')'))
-            $('.r:nth-child(' + (row+1) + ') .c:nth-child('+(cursor+1)+')').text(e.key.toUpperCase());
-            cursor += 1;
-        }
+        onPressLetter(e.key);
     } else if (e.key === "Backspace") {
-        if (cursor > 0) {
-            cursor -= 1;
-            $('.r:nth-child(' + (row+1) + ') .c:nth-child('+(cursor+1)+')').text("");
-            word = word.slice(0, word.length-1)
-        }
+        onPressBackspace();
     }
-    
 }, false);
 
 // parser, evaluater, editor, consl, canvas, controls, options
 runtime.config(parser, evaluator, null, io, null, {}, {});
-
-const randomWord = words[Math.floor(Math.random() * words.length)];
-
-runtime.restart();
-runtime.executeAll({in: words}, wordleSrc);
 
 let keyboard = $(".keyboard");
 let keys = [
@@ -90,21 +103,67 @@ let keys = [
     "ZXCVBNM"
 ];
 
-for (let r = 0; r < keys.length; r++) {
-    let row = keys[r];
-    let keyRow = $('<div class="key-row"></div>');
-    for (let i = 0; i < row.length; i++) {
-        let letter = row[i];
-        keyRow.append($('<div class="key key-'+letter.toLowerCase()+'">'+letter+'</div>'));
+function initKeyboard() {
+    keyboard.empty();
+    for (let r = 0; r < keys.length; r++) {
+        let row = keys[r];
+        let keyRow = $('<div class="key-row"></div>');
+        if (r === 2) {
+            let enterKey = $('<div class="key key-enter">Enter</div>');
+            enterKey.on("click", function() {
+                onPressEnter();
+            });
+            keyRow.append(enterKey);
+        }
+        for (let i = 0; i < row.length; i++) {
+            let letter = row[i];
+            let key = $('<div class="key key-'+letter.toLowerCase()+'">'+letter+'</div>');
+            key.on("click", function() {
+                onPressLetter(letter);
+            });
+            keyRow.append(key);
+        }
+        if (r === 2) {
+            let delKey = $('<div class="key key-del">Del</div>');
+            delKey.on("click", function() {
+                onPressBackspace();
+            });
+            keyRow.append(delKey);
+        }
+        keyboard.append(keyRow);
     }
-    keyboard.append(keyRow);
 }
 
-let board = $(".console-view");
-for (let i = 0; i < 6; i++) {
-    let row = $('<div class="r"></div>');
-    for (let j = 0; j < 5; j++) {
-        row.append($('<div class="c"></div>'));
+function initBoard() {
+    let board = $(".console-view");
+    board.empty();
+    for (let i = 0; i < 6; i++) {
+        let row = $('<div class="r"></div>');
+        for (let j = 0; j < 5; j++) {
+            row.append($('<div class="c"></div>'));
+        }
+        board.append(row);
     }
-    board.append(row);
 }
+
+function startGame() {
+    enterCallback = null;
+    cursor = 0;
+    row = 0;
+    word = "";
+    gameover = false;
+
+    initBoard();
+    initKeyboard();
+
+    runtime.restart();
+    runtime.executeAll({in: words}, wordleSrc);
+}
+
+$(".new-game").on("click", function(){
+    $(".result-word").hide();
+    $(".new-game").hide();
+    startGame();
+});
+
+startGame();
