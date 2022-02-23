@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<title>Wordle</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<link rel="icon" href="https://siwei.dev/favicon.gif">
+
+	<script src="https://runtime.siwei.dev/ui/main/jquery-1.12.4.js"></script>
+
+	<link rel="stylesheet" href="https://runtime.siwei.dev/ui/console/jqconsole.css">
+	<link rel="stylesheet" href="./css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+	<div class="wrapper">
+		<div class="console-view">
+			<div class="r">
+				<div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div>
+			</div>
+			<div class="r">
+				<div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div>
+			</div>
+			<div class="r">
+				<div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div>
+			</div>
+			<div class="r">
+				<div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div>
+			</div>
+			<div class="r">
+				<div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div>
+			</div>
+			<div class="r">
+				<div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div>
+			</div>
+			<div class="alert">Not in word list</div>
+		</div>
+
+		<div class="keyboard"></div>
+
+		<div class="app-info">
+			<p>This game is written in <a href="https://github.com/yjlo123/runtime-script" target="_blank">Runtime Script</a>.</p>
+			<p>View source code <a href="https://runtime.siwei.dev/?src=rundis" target="_blank">here</a>.</p>
+		</div>
+		<footer>
+			<small>&copy; <span id="year"></span> <a href="https://liusiwei.com/">liusiwei.com</a></small>
+		</footer>
+	</div>
+	<script src="https://runtime.siwei.dev/src/parser.js"></script>
+	<script src="https://runtime.siwei.dev/src/evaluator.js"></script>
+	<script src="https://runtime.siwei.dev/src/executer.js"></script>
+	<script src="js/words.js"></script>
+	<script src="js/source.js"></script>
+	<script src="js/main.js"></script>
+	<script>document.getElementById("year").innerHTML = new Date().getFullYear();</script>
+
+</body>
+</html>
