@@ -9,7 +9,7 @@ let word = "";
 let gameover = false;
 
 let io = {
-	Write: (text, style) => {
+    Write: (text, style) => {
         if (text.trim() === "win") {
             gameover = true;
             return;
@@ -37,7 +37,7 @@ let io = {
             console.log(text);
         }
     },
-	Input: (callback)=>{
+    Input: (callback)=>{
         enterCallback = callback;
     },
     AbortInput: ()=>{}
@@ -56,7 +56,7 @@ window.addEventListener("keydown", function(e) {
                 enterCallback(word);
             }
         }
-    	// prevent scroll
+        // prevent scroll
         e.preventDefault();
     } else if ('abcdefghijklmnopqrstuvwxyz'.indexOf(e.key.toLowerCase()) > -1) {
         if (cursor < 5) {
