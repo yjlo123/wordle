@@ -28,7 +28,6 @@ let io = {
                 resultWord.text(tokens[1].toUpperCase());
                 resultWord.fadeIn();
             }
-            $(".new-game").show();
             return;
         }
         
@@ -159,7 +158,6 @@ window.addEventListener("keydown", function(e) {
 
 $(".new-game").on("click", function(){
     $(".result-word").hide();
-    $(".new-game").hide();
     startGame();
 });
 
