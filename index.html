@@ -18,10 +18,32 @@
 			<div class="title left">Wordle</div>
 			<div class="key menu-key right new-game">New Game</div>
 		</div>
-		<div class="console-view"></div>
-		<div class="alert not-in-list">Not in word list</div>
-		<div class="alert result-word"></div>
-		<div class="keyboard"></div>
+
+		<div class="game-view">
+			<div class="console-view"></div>
+			<div class="alert not-in-list">Not in word list</div>
+			<div class="alert result-word"></div>
+			<div class="keyboard"></div>
+	
+			<div class="popup">
+				<div class="intro">
+					<div class="popup-title">
+						<div class="close-btn">
+							<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+								<path fill="var(--color-tone-1)" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+							</svg>
+						</div>
+					</div>
+					
+					<div>Guess the 5-letter word in 6 tries.</div>
+					<div>After each guess, the letters will change color to show how close your guess was to the word.</div>
+					<div><div class="gray text-block">&nbsp;Gray&nbsp;</div> the letter is not in the word in any spot.</div>
+					<div><div class="yellow text-block">&nbsp;Yellow&nbsp;</div> the letter is in the word but in the wrong spot.</div>
+					<div><div class="green text-block">&nbsp;Green&nbsp;</div> the letter is in the word and in the correct spot.</div>
+				</div>
+			</div>
+		</div>
+
 		<div class="app-info">
 			<p>This game is written in <a href="https://github.com/yjlo123/runtime-script" target="_blank">Runtime Script</a>.</p>
 			<p>View source code <a href="https://raw.githubusercontent.com/yjlo123/wordle/main/js/source.js" target="_blank">here</a>.</p>

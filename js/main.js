@@ -130,7 +130,7 @@ function initBoard() {
     }
 }
 
-function startGame() {
+function initGame() {
     enterCallback = null;
     cursor = 0;
     row = 0;
@@ -139,7 +139,10 @@ function startGame() {
 
     initBoard();
     initKeyboard();
+}
 
+function startGame() {
+    initGame();
     runtime.restart();
     runtime.executeAll({in: words}, wordleSrc);
 }
@@ -161,7 +164,10 @@ $(".new-game").on("click", function(){
     startGame();
 });
 
+$(".close-btn").on("click", function() {
+    $(".popup").hide();
+});
+
 // parser, evaluater, editor, consl, canvas, controls, options
 runtime.config(parser, evaluator, null, io, null, {}, {});
-
 startGame();
